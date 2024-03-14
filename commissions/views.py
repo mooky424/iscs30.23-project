@@ -12,7 +12,7 @@ def Comment(request, pk):
     commissionName = Commission.objects.get(pk = pk)
     Comment = Comment.objects.filter(recipe__name=recipeName)
     ctx = {
-         'comments' : comment   
+         'comments' : Comment   
     }
-    return render(request, ".html", ctx)
+    return render(request, "commission.html", ctx)
 # Create your views here.
