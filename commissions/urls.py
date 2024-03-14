@@ -1,7 +1,7 @@
-from django.contrib import admin
 from django.urls import path
+from .views import commissions_list, commission
 
 urlpatterns = [
-    paht('', include('ledger.urls'), namespace=""),
-    path('admin/', admin.site.urls),
+    path('commissions/list', commissions_list, name = "comList"),
+    path('commissions/<int:pk>', commission, name = "comItem"),
 ]
