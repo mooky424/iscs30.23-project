@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import commissions_list, commission
+from .views import CommissionListView, CommissionDetailView
 
 urlpatterns = [
-    path('commissions/list', commissions_list, name = "comList"),
-    path('commissions/<int:pk>', commission, name = "comItem"),
+    path('commissions/list', CommissionListView.as_view(), name = "comList"),
+    path('commissions/<int:pk>', CommissionDetailView.as_view(), name = "comItem"),
 ]
+
+app_name = "commissions"

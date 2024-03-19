@@ -1,18 +1,13 @@
 from django.shortcuts import render
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from .models import Commission, Comment
 
-def commissions_list(request):
-    commissions = Commission.objects.order_by('created_on')
-    ctx = {
-        'commissions' : commissions
-    }
-    return render(request, "commissions_list.html", ctx)
+class CommissionListView(ListView):
+    model = Commission
+    template_name = 'commissions_list.html'
 
-def commission(request, pk):
-    commissionName = Commission.objects.get(pk = pk)
-    Comment = Comment.objects.filter(recipe__name=recipeName)
-    ctx = {
-         'comments' : Comment   
-    }
-    return render(request, "commission.html", ctx)
+class CommissionDetailView(DetailView):
+    model = Comment
+    template_name = 'commission.html'
 # Create your views here.

@@ -1,13 +1,14 @@
 <html lang ="en-US">
-    <head>
-        <title>Commissions List</title>
-    </head>
-    <body>
-        <h3>Commissions List</h3>
+
+{% extends 'base.html' %}
+
+{% block title %}Commissions List{% endblock %}
+
+{% block content %}
+    <h3>Commissions List</h3>
         <ul>
-            {% for commission in commissions %}
-                <li><a href="{{recipe.get_absolute_url}}">{{ commission.name }}</a></li>
-            {% endfor%}
+        {% for commission in commissions %}
+            <li><a href="{{commission.get_absolute_url}}">{{ commission.name }}</a></li>
+        {% endfor%}
         </ul>
-    </body>
-</html>
+{% endblock %}

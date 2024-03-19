@@ -1,13 +1,13 @@
 <html lang ="en-US">
-    <head>
-        <title>Commission List</title>
-    </head>
-    <body>
-        <h3>{{ name }}</h3>
-        <ul>
+
+{% extends 'base.html' %}
+
+{% block title %} Commission List {% endblock %}
+
+{% block content %}
+    <h3>{{ name }}</h3>
+    <ul>
         {% for  comments in Comment %}
             <li>{{ comment.commission }}, {{comment.entry}}</li>
         {% endfor %}
-        </ul>
-    </body>
-</html>
+    </ul>
