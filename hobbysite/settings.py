@@ -41,10 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-<<<<<<< HEAD
     "merchstore",
-=======
->>>>>>> 97a0dec96a3f7f6e36fea52aa224e51438d30126
 ]
 
 MIDDLEWARE = [
