@@ -1,22 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
-</head>
-<body>
-    <h1>Products</h1>
-    <h2>
-        <ul>
-            {% for product in object_list %}
+{% extends.html %}
+{% load static %}
+{% block title %}
+    Products
+{% endblock title %}
+<h1>Products</h1>
+<h2>
+    <ul>
+        {% for product in object_list %}
             <li>
-                <a href="{{product.get_absolute_url}}">
-                    {{product}}
-                </a>
+                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
             </li>
-            {% endfor %}
-        </ul>
-    </h2>
+        {% endfor %}
+    </ul>
+</h2>
 </body>
 </html>
