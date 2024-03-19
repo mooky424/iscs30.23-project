@@ -5,9 +5,11 @@
 {% block title %} Commission List {% endblock %}
 
 {% block content %}
-    <h3>{{ name }}</h3>
+    <h1>test</h1>
+    <h3>{{ commissions.title }}</h3>
     <ul>
         {% for  comments in Comment %}
             <li>{{ comment.commission }}, {{comment.entry}}</li>
         {% endfor %}
     </ul>
+{% endblock %}

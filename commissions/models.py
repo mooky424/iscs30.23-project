@@ -10,6 +10,9 @@ class Commission(models.Model):
 
     class Meta:
         ordering = ['created_on']
+    
+    def get_absolute_url(self):
+        return reverse('commissions:comItem', args=[str(self.pk)])
 
 class Comment(models.Model):
     commission = models.ForeignKey(Commission, on_delete=models.CASCADE, related_name = 'recipe')

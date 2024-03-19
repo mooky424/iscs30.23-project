@@ -7,8 +7,8 @@
 {% block content %}
     <h3>Commissions List</h3>
         <ul>
-        {% for commission in commissions %}
-            <li><a href="{{commission.get_absolute_url}}">{{ commission.name }}</a></li>
+        {% for commission in object_list %}
+            <li><a href="{{commission.get_absolute_url}}">{{ commission.title }}</a></li>
         {% endfor%}
         </ul>
 {% endblock %}
