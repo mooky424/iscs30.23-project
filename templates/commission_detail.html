@@ -1,16 +1,12 @@
-<html lang ="en-US">
-
 {% extends 'base.html' %}
-
-{% block title %} Commission List {% endblock %}
-
+{% block title %}Commission List{% endblock %}
 {% block content %}
     <h3>{{ commission.title }}</h3>
     <ul>
         {% for comment in  commission.comments.all %}
-        <li>{{ comment.entry }}</li>
-        <li>{{ comment.created_on }}</li>
-        <li>{{ comment.updated_on }}</li>
+            <li>{{ comment.entry }}</li>
+            <li>{{ comment.created_on }}</li>
+            <li>{{ comment.updated_on }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
