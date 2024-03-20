@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -11,30 +10,11 @@
 <body>
     <div class="container">
         <h1>{{ article.title }}</h1>
-        <p>Created On: {{ article.created_on }}</p>
+        <p> Created On: {{ article.created_on }}</p>
         <p>Updated On: {{ article.updated_on }}</p>
-        <p>{{ article.entry|linebreaks }}</p>
+        <p> {{ article.entry_field|linebreaks }} </p>
     </div>
 </body>
 </html>
 {% endblock %}
-{% extends 'base.html' %}
 
-{% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ article.title }}</title>
-</head>
-<body>
-    <div class="container">
-        <h1>{{ article.title }}</h1>
-        <p>Created On: {{ article.created_on }}</p>
-        <p>Updated On: {{ article.updated_on }}</p>
-        <p>{{ article.entry|linebreaks }}</p>
-    </div>
-</body>
-</html>
-{% endblock %}

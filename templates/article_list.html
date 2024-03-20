@@ -6,14 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article List</title>
+    <title>Article List </title>
 </head>
 <body>
     <div class="container">
         <h1>Article List</h1>
         <ul>
-            {% for article in articles %}
-                <li><a href="{% url 'blog:article_detail' article.pk %}">{{ article.title }}</a></li>
+            {% for article in object_list %}
+                <li> <a href="{% url 'blog:article_detail'%}"> {{ article.title }} </a></li>
             {% endfor %}
         </ul>
     </div>
