@@ -21,10 +21,12 @@ class Article(models.Model):
     entry = models.TextField()
     created_on = models.DateTimeField(auto_now_add="True")
     updated_on = models.DateTimeField(auto_now="True")
-    ordering = ["-created_on"]
+    
+    class Meta:
+        ordering = ["-created_on"]
    
     def __str__(self):
-        return self.name
+        return self.title
    
-    def get_absoulute_url(self):
-        return reverse('wiki/article/1', args=str(self.pk))
+    def get_absolute_url(self):
+        return reverse('wiki:article_detail', args=str(self.pk))
