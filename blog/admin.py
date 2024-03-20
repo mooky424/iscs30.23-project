@@ -10,6 +10,6 @@ class ArticleAdmin(admin.ModelAdmin):
     model = Article
 
 admin.site.register(Article, ArticleAdmin)
-admin.site.register(ArticleCategory, ArticleCategory)
+admin.site.register(ArticleCategory, ArticleCategoryAdmin)
 
 
