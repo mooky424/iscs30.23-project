@@ -7,10 +7,10 @@
 {% block content %}
     <h3>{{ commission.title }}</h3>
     <ul>
-        {% for comment in  object.comments.all %}
-        <li>{{ comment.comment.entry }}</li>
-        <li>{{ comment.comment.created_on }}</li>
-        <li>{{ comment.comment.updated_on }}</li>
+        {% for comment in  commission.comments.all %}
+        <li>{{ comment.entry }}</li>
+        <li>{{ comment.created_on }}</li>
+        <li>{{ comment.updated_on }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
