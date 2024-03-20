@@ -3,10 +3,10 @@
 from django.contrib import admin
 from .models import ArticleCategory, Article
 
-class ArticleCategoryInline(admin.TabularInline):
+class ArticleCategoryAdmin(admin.ModelAdmin):
     model = ArticleCategory
 
-class ArticleInline(admin.TabularInline):
+class ArticleAdmin(admin.ModelAdmin):
     model = Article
 
 admin.site.register(ArticleCategory)
