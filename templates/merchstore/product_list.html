@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Products
+{% endblock title %}
+{% block content %}
+    <h1>Products</h1>
+    {% for type in object_list %}
+        <h2>{{ type }}</h2>
+        {% for product in type.products.all %}
+            <li>
+                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+            </li>
+        {% endfor %}
+    {% endfor %}
+{% endblock content %}

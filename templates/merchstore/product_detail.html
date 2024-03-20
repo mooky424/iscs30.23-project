@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    {{ product.name }}
+{% endblock title %}
+{% block content %}
+    <a href="{% url 'merchstore:product_list' %}">Back to Product List</a>
+    <h1>{{ product.name }} - {{ product.price }}</h1>
+    <h2>{{ product.type }}</h2>
+    <p>{{ product.description }}</p>
+{% endblock content %}
