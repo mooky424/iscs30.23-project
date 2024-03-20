@@ -41,14 +41,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-<<<<<<< HEAD
-    "blog",
-=======
     "merchstore",
     "wiki",
     "commissions",
     "blog"
->>>>>>> c1dcb62d32bd1547bf87c9048fe1a232783567e4
 ]
 
 MIDDLEWARE = [
