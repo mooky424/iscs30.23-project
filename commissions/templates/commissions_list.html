@@ -9,6 +9,9 @@
         <ul>
         {% for commission in object_list %}
             <li><a href="{{commission.get_absolute_url}}">{{ commission.title }}</a></li>
+            <p>Created on: {{ commission.created_on }}, Updated on: {{ commission.updated_on }}</p>
+            <p>{{commission.description}}</p>
+            <p>People required: {{commission.people_required}}</p>
         {% endfor%}
         </ul>
 {% endblock %}

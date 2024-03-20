@@ -8,6 +8,6 @@ class CommissionListView(ListView):
     template_name = 'commissions_list.html'
 
 class CommissionDetailView(DetailView):
-    model = Comment
-    template_name = 'commission.html'
+    model = Commission
+    template_name = 'commission_detail.html'
 # Create your views here.
