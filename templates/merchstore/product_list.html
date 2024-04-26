@@ -4,13 +4,49 @@
     Products
 {% endblock title %}
 {% block content %}
-    <h1>Products</h1>
-    {% for type in object_list %}
-        <h2>{{ type }}</h2>
-        {% for product in type.products.all %}
-            <li>
-                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
-            </li>
+    {% if request.user.is_authenticated %}
+        <h1>Your Products</h1>
+        {% for type in product_types %}
+            <h2>{{ type }}</h2>
+            <ul>
+                {% for product in object_list %}
+                    {% if product.type == type and product.owner == request.user.profile %}
+                        <li>
+                            <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'merchstore:product_create' %}">Add Product</a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% endfor %}
-    {% endfor %}
+        <h1>Products</h1>
+        {% for type in product_types %}
+            <h2>{{ type }}</h2>
+            <ul>
+                {% for product in object_list %}
+                    {% if product.type == type and product.owner != request.user.profile %}
+                        <li>
+                            <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h1>Products</h1>
+        {% for type in product_types %}
+            <h2>{{ type }}</h2>
+            <ul>
+                {% for product in object_list %}
+                    {% if product.type == type %}
+                        <li>
+                            <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}
