@@ -14,6 +14,13 @@ class ProductType(models.Model):
 
 
 class Product(models.Model):
+
+    product_status = {
+        "Available": "Available",
+        "On Sale": "On Sale",
+        "Out of Stock": "Out of Stock",
+    }
+
     name = models.CharField(max_length=255)
     type = models.ForeignKey(
         ProductType,
@@ -21,8 +28,15 @@ class Product(models.Model):
         related_name="products",
         null=True,
     )
+    owner = models.ForeignKey(
+        "profiles.Profile",
+        on_delete=models.CASCADE,
+        related_name="products",
+    )
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.IntegerField()
+    status = models.CharField(max_length=32, choices=product_status)
 
     def __str__(self):
         return self.name
@@ -32,3 +46,31 @@ class Product(models.Model):
 
     class Meta:
         ordering = ["name"]
+
+
+class Transaction(models.Model):
+
+    transaction_status = {
+        "On Cart": "On Cart",
+        "To Pay": "To Pay",
+        "To Ship": "To Ship",
+        "To Receive": "To Receive",
+        "Delivered": "Delivered",
+    }
+
+    buyer = models.ForeignKey(
+        "profiles.Profile",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    amount = models.IntegerField
+    status = models.CharField(max_length=32, choices=transaction_status)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.amount} - {self.product} - {self.status}"
