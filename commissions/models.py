@@ -1,10 +1,15 @@
 from django.db import models
 from django.urls import reverse
 
+Status_Choices_Commission = (
+    ('Open'), ('Full'), ('Completed'), ('Discontinued')
+)
+
 class Commission(models.Model):
     title = models.CharField(max_length = 255)
     description = models.TextField()
     people_required = models.IntegerField()
+    status = models.CharField(choices=Status_Choices_Commission, default='Open')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -17,16 +22,25 @@ class Commission(models.Model):
     def get_absolute_url(self):
         return reverse('commissions:comItem', args=[str(self.pk)])
 
-class Comment(models.Model):
-    commission = models.ForeignKey(Commission, on_delete=models.CASCADE, related_name = 'comments')
-    entry = models.TextField()
+Status_Choices_Job = (
+    ('Open'), ('Full')
+)
+
+class Job(models.Model):
+    commission = models.ForeignKey(Commission, on_delete=models.CASCADE, related_name = 'job')
+    role = models.TextField(max_length = 255)
+    manpower_required = models.IntegerField()
+    status = models.CharField(choices=Status_Choices_Job, default='Open')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_on']
+        ordering = ['manpower_required']
 
     def __str__(self):
         return'{}'.format(self.created_on)
+
+class JobApplication(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name = 'jobapplication')
         
 # Create your models here.
