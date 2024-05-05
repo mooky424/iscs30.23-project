@@ -24,6 +24,6 @@ urlpatterns = [
     path("wiki/", include("wiki.urls", namespace="wiki")),
     path("commissions/", include("commissions.urls", namespace="commissions")),
     path("blog/", include("blog.urls", namespace="blog")),
-    path("profile/", include("profiles.urls", namespace="profile")),
+    path("profile/", include("user_management.urls", namespace="profile")),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
