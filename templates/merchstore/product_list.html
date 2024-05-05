@@ -15,12 +15,12 @@
                             <a href="{{ product.get_absolute_url }}">{{ product }}</a>
                         </li>
                     {% endif %}
-                    <li>
-                        <a href="{% url 'merchstore:product_create' %}">Add Product</a>
-                    </li>
                 {% endfor %}
             </ul>
         {% endfor %}
+        <h3>
+            <a href="{% url 'merchstore:product_create' %}">Add Product</a>
+        </h3>
         <h1>Products</h1>
         {% for type in product_types %}
             <h2>{{ type }}</h2>
