@@ -29,7 +29,7 @@ class Product(models.Model):
         null=True,
     )
     owner = models.ForeignKey(
-        "profiles.Profile",
+        "user_management.Profile",
         on_delete=models.CASCADE,
         related_name="products",
     )
@@ -59,7 +59,7 @@ class Transaction(models.Model):
     }
 
     buyer = models.ForeignKey(
-        "profiles.Profile",
+        "user_management.Profile",
         on_delete=models.SET_NULL,
         null=True,
     )
@@ -68,9 +68,13 @@ class Transaction(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
-    amount = models.IntegerField
+    amount = models.IntegerField()
     status = models.CharField(max_length=32, choices=transaction_status)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.amount} - {self.product} - {self.status}"
+    
+    def get_absolute_url(self):
+        return reverse("merchstore:transaction_detail", kwargs={"pk": self.pk})
+    
