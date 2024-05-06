@@ -41,7 +41,19 @@ class Job(models.Model):
     def __str__(self):
         return'{}'.format(self.created_on)
 
+Status_Choices_JobApplicant = (
+    ('Pending'), ('Accepted'), ('Rejected')
+)
+
 class JobApplication(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name = 'jobapplication')
-        
+    applicant = models.ForeignKey(user_management.Profile, on_delete=models.CASCADE, related_name = 'jobapplicant')
+    status = models.CharField(choices=Status_Choices_JobApplicant, default='Pending')
+    applied_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['status']
+
+    def __str__(self):
+        return'{}'.format(self.created_on)
 # Create your models here.
