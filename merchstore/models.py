@@ -43,6 +43,13 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse("merchstore:product_detail", args=str(self.pk))
+    
+    def save(self):
+        if self.stock <= 0:
+            self.status = "Out of Stock"
+        else:
+            self.status = "Available"
+        return super().save()
 
     class Meta:
         ordering = ["name"]
