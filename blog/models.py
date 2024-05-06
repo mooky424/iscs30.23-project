@@ -4,14 +4,13 @@ from django.contrib.auth.models import User
 
 
 class Article(models.Model):
-    author = models.ForeignKey(User, on_delete = models.SET_NULL)
+    author = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
     title = models.CharField(max_length=255)
     entry_field = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    categories = models.ForeignKey(
-        "ArticleCategory", on_delete=models.SET_NULL, null=True, related_name="articles"
-    )
+    categories = models.ForeignKey("ArticleCategory", on_delete=models.SET_NULL, null=True, related_name="articles")
+    header_image = models.ImageField(upload_to='article_images', default = 'default.jpg')
 
     class Meta:
         ordering = ["-created_on"]
@@ -24,7 +23,7 @@ class Article(models.Model):
 
 
 class ArticleCategory(models.Model):
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     description = models.TextField()
 
     class Meta:
@@ -36,6 +35,7 @@ class ArticleCategory(models.Model):
     
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete = models.SET_NULL)
+    article = models.ForeignKey(Article, on_delete = models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     entry_field = models.TextField()
