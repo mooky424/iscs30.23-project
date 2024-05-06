@@ -13,7 +13,7 @@
             {% for transaction in object_list %}
                 {% if transaction.product.owner == owner %}
                     <li>
-                        <a href="{{ transaction.get_absolute_url }}">{{ transaction }}</a>
+                        {{ transaction }}
                     </li>
                 {% endif %}
             {% endfor %}
