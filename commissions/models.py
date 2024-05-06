@@ -6,7 +6,7 @@ Status_Choices_Commission = (
 )
 
 class Commission(models.Model):
-    title = models.CharField(max_length = 255)
+    title = models.CharField(max_length=255)
     description = models.TextField()
     people_required = models.IntegerField()
     status = models.CharField(choices=Status_Choices_Commission, default='Open')
@@ -14,13 +14,14 @@ class Commission(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['created_on']
-    
+        ordering = ["created_on"]
+
     def __str__(self):
-        return'{}'.format(self.title)
+        return "{}".format(self.title)
 
     def get_absolute_url(self):
-        return reverse('commissions:comItem', args=[str(self.pk)])
+        return reverse("commissions:comItem", args=[str(self.pk)])
+
 
 Status_Choices_Job = (
     ('Open'), ('Full')

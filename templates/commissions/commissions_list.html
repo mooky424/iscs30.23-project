@@ -1,17 +1,17 @@
-<html lang ="en-US">
-
-{% extends 'base.html' %}
-
-{% block title %}Commissions List{% endblock %}
-
+{% extends "base.html" %}
+{% block title %}
+    Commissions List
+{% endblock title %}
 {% block content %}
     <h3>Commissions List</h3>
-        <ul>
+    <ul>
         {% for commission in object_list %}
-            <li><a href="{{commission.get_absolute_url}}">{{ commission.title }}</a></li>
+            <li>
+                <a href="{{ commission.get_absolute_url }}">{{ commission.title }}</a>
+            </li>
             <p>Created on: {{ commission.created_on }}, Updated on: {{ commission.updated_on }}</p>
-            <p>{{commission.description}}</p>
-            <p>People required: {{commission.people_required}}</p>
-        {% endfor%}
-        </ul>
-{% endblock %}
+            <p>{{ commission.description }}</p>
+            <p>People required: {{ commission.people_required }}</p>
+        {% endfor %}
+    </ul>
+{% endblock content %}

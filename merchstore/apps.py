@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CommissionsConfig(AppConfig):
+class MerchstoreConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "commissions"
+    name = "merchstore"

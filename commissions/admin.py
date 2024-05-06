@@ -10,6 +10,7 @@ class JobAdmin(admin.ModelAdmin):
 class JobApplicationAdmin(admin.ModelAdmin):
     model = JobApplication
 
+
 admin.site.register(Commission, CommissionAdmin)
 admin.site.register(Job, JobAdmin)
 admin.site.register(JobApplication, JobApplicationAdmin)
