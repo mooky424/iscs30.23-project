@@ -12,3 +12,4 @@ class ArticleDetailView(DetailView):
 class ArticleListView(ListView):
     model = Article
     template_name = "blog/article_list.html"
+    context_object_name = 'articles'
