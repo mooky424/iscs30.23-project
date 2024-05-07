@@ -11,13 +11,20 @@
         <li>Status: {{ commission.status }}</li>
         <li>Listed by: {{ commission.author }}</li>
     </ul>
+    <h3>Jobs available:</h3>
         {% for job in commission.job.all %}
             <h4>role: {{ job.role }}</h4>
             <ul>
+                <li>accepted: {{accepted}} </li>
                 <li>manpower_required: {{ job.manpower_required }}</li>
+                <li>manpower available: {{ manpower_available }} </li>
                 <li>status: {{ job.status }}</li>
                 <li>created on: {{ job.created_on }}</li>
                 <li>last updated: {{ job.updated_on }}</li>
             </ul>
         {% endfor %}
+
+    {% if request.user.is_authenticated %}
+        <p>Apply for job:</p>
+    {% endif %}
 {% endblock content %}
