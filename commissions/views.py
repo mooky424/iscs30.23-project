@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Commission, Job, JobApplication
 
@@ -27,5 +28,10 @@ class CommissionDetailView(DetailView):
         context["accepted"] = accepted
         
         return context
+
+class CommissionCreateView(LoginRequiredMixin, CreateView):
+    model = Commission
+    fields = '__all__'
+    template_name = "commissions/commission_form.html"
 
 # Create your views here.
