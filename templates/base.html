@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% if request.user.is_authenticated %}
+            <h2>Logged In</h2>
+            <form action="{% url 'logout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit"> logout </button>
+            </form>
+            {% else %}
+            <a href = "{% url 'login' %}"> Login </a>
+        {% endif %}
         <link rel="stylesheet" href="style.css">
         <title>
             {% block title %}

@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Commission
 
 
-class CommissionListView(LoginRequiredMixin, ListView):
+class CommissionListView(ListView):
     model = Commission
     template_name = "commissions/commissions_list.html"
 
