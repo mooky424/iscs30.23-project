@@ -35,7 +35,14 @@ class CommissionDetailView(DetailView):
         
         return context
 
-class CommissionCreateView(LoginRequiredMixin, TemplateView):
+class CommissionCreateView(LoginRequiredMixin, CreateView):
+    model = Commission
+    fields = '__all__'
+    template_name = "commissions/commission_form.html"
+
+class CommissionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Commission
+    fields = '__all__'
     template_name = "commissions/commission_form.html"
 
 # Create your views here.

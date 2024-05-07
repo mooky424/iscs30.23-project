@@ -24,6 +24,8 @@ class Commission(models.Model):
     def get_absolute_url(self):
         return reverse("commissions:comItem", args=[str(self.pk)])
 
+    def get_pk(self):
+        return self.pk
 
 Status_Choices_Job = (
     ('Open','Open'), ('Full','Full')
