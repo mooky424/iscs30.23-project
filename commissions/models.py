@@ -1,15 +1,17 @@
 from django.db import models
 from django.urls import reverse
+from user_management.models import Profile
 
 Status_Choices_Commission = (
-    ('Open'), ('Full'), ('Completed'), ('Discontinued')
+    ('Open','Open'), ('Full','Full'), ('Completed','Completed'), ('Discontinued','Discounted')
 )
 
 class Commission(models.Model):
     title = models.CharField(max_length=255)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name = 'author')
     description = models.TextField()
     people_required = models.IntegerField()
-    status = models.CharField(choices=Status_Choices_Commission, default='Open')
+    status = models.CharField(max_length = 12, choices=Status_Choices_Commission, default='OPEN')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -24,14 +26,14 @@ class Commission(models.Model):
 
 
 Status_Choices_Job = (
-    ('Open'), ('Full')
+    ('Open','Open'), ('Full','Full')
 )
 
 class Job(models.Model):
     commission = models.ForeignKey(Commission, on_delete=models.CASCADE, related_name = 'job')
     role = models.TextField(max_length = 255)
     manpower_required = models.IntegerField()
-    status = models.CharField(choices=Status_Choices_Job, default='Open')
+    status = models.CharField(max_length = 4, choices=Status_Choices_Job, default='Open')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -39,21 +41,21 @@ class Job(models.Model):
         ordering = ['manpower_required']
 
     def __str__(self):
-        return'{}'.format(self.created_on)
+        return'{}'.format(self.role)
 
 Status_Choices_JobApplicant = (
-    ('Pending'), ('Accepted'), ('Rejected')
+    ('Pending','Pending'), ('Accepted','Accepted'), ('Rejected','Rejected')
 )
 
 class JobApplication(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name = 'jobapplication')
-    applicant = models.ForeignKey(user_management.Profile, on_delete=models.CASCADE, related_name = 'jobapplicant')
-    status = models.CharField(choices=Status_Choices_JobApplicant, default='Pending')
+    applicant = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name = 'jobapplicant')
+    status = models.CharField(max_length = 8, choices=Status_Choices_JobApplicant, default='Pending')
     applied_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['status']
 
     def __str__(self):
-        return'{}'.format(self.created_on)
+        return'{}'.format(self.applicant)
 # Create your models here.

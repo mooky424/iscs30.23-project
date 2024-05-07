@@ -12,6 +12,8 @@
             <p>Created on: {{ commission.created_on }}, Updated on: {{ commission.updated_on }}</p>
             <p>{{ commission.description }}</p>
             <p>People required: {{ commission.people_required }}</p>
+            <p>Status: {{ commission.status }}</p>
+            <p>Listed by: {{ commission.author }}</p>
         {% endfor %}
     </ul>
 {% endblock content %}
