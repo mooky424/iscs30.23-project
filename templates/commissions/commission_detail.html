@@ -10,14 +10,16 @@
         <li>People required: {{ commission.people_required }}</li>
         <li>Status: {{ commission.status }}</li>
         <li>Listed by: {{ commission.author }}</li>
+        <li>Total manpower required: {{ total_manpower_required }}</li>
+        <li>Applicants accepted: {{ accepted }}</li>
+        <li>Total manpower available: {{ manpower_available }}</li>
     </ul>
     <h3>Jobs available:</h3>
         {% for job in commission.job.all %}
             <h4>role: {{ job.role }}</h4>
             <ul>
-                <li>accepted: {{accepted}} </li>
-                <li>manpower_required: {{ job.manpower_required }}</li>
-                <li>manpower available: {{ manpower_available }} </li>
+                <li>manpower required: {{ job.manpower_required }}</li>
+                <li>accepted applicants: {{ job.applicants_accepted }} </li>
                 <li>status: {{ job.status }}</li>
                 <li>created on: {{ job.created_on }}</li>
                 <li>last updated: {{ job.updated_on }}</li>
@@ -28,5 +30,8 @@
         <p>Apply for job:</p>
     {% endif %}
 
+    {% if commission.author.user == user %}
+        <a href = "">Update Commission</a>
+    {% endif%}
     <a href = "../list">Back to list view</a>
 {% endblock content %}

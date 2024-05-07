@@ -42,6 +42,9 @@ class Job(models.Model):
 
     def __str__(self):
         return'{}'.format(self.role)
+    
+    def applicants_accepted(self):
+        return self.jobapplication.filter(status='Accepted').count()
 
 Status_Choices_JobApplicant = (
     ('Pending','Pending'), ('Accepted','Accepted'), ('Rejected','Rejected')
