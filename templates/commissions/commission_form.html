@@ -13,6 +13,11 @@
         {% csrf_token %}
         {{  form.as_p  }}
         <p>Author: {{user}} </p>
+
+        {{ job_formset.management_form }}
+        {% for form in job_formset %}
+            {{ form.as_p }}
+        {% endfor %}
         <button type="submit">save</button>
     </form>
 {% endblock %}

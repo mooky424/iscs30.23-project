@@ -47,6 +47,9 @@ class Job(models.Model):
     def applicants_accepted(self):
         return self.jobapplication.filter(status='Accepted').count()
 
+    def get_pk(self):
+        return self.pk
+
 Status_Choices_JobApplicant = (
     ('Pending','Pending'), ('Accepted','Accepted'), ('Rejected','Rejected')
 )

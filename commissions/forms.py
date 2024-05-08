@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import formset_factory
+from django.forms import inlineformset_factory
 from django.forms import ModelForm, TextInput
 from .models import Commission, Job, JobApplication
 
@@ -16,12 +16,22 @@ class CommissionForm(forms.ModelForm):
         model = Commission
         fields = ['title','description','status']
 
+class JobForm(forms.ModelForm):
     role = forms.CharField(max_length=255)
     manpower_required = forms.IntegerField()
-
-class JobForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = '__all__'
+        fields = ['role','manpower_required']
 
-CommissionFormSet = formset_factory(CommissionForm, JobForm)
+Status_Choices_JobApplicant = (
+    ('Pending','Pending'), ('Accepted','Accepted'), ('Rejected','Rejected')
+)
+
+class JobApplicationForm(forms.ModelForm):
+    status = forms.ChoiceField(choices = Status_Choices_JobApplicant)
+    class Meta:
+        model = JobApplication
+        fields = ['status']
+
+
+JobFormSet = inlineformset_factory(Commission, Job, form=JobForm, extra = 3)

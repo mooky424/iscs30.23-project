@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView
-from .forms import CommissionFormSet, CommissionForm, JobForm
+from .forms import JobFormSet, CommissionForm, JobForm, JobApplicationForm
 from .models import Commission, Job, JobApplication
 
 
@@ -36,20 +36,42 @@ class CommissionDetailView(DetailView):
         return context
 
 class CommissionCreateView(LoginRequiredMixin, CreateView):
-    template_name = "commissions/commission_form.html"
+    template_name = 'commissions/commission_form.html'
     form_class = CommissionForm
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['job_formset'] = JobFormSet(self.request.POST)
+        else:
+            context['job_formset'] = JobFormSet()
+        return context
+
     def form_valid(self, form):
+        context = self.get_context_data()
         form.instance.author = self.request.user.profile
-        commission = form.save()
-        role = form.cleaned_data['role']
-        manpower_required = form.cleaned_data['manpower_required']
-        job = Job.objects.create(commission=commission,role=role,manpower_required=manpower_required)
-        return super().form_valid(form)
+        job_formset = context['job_formset']
+        if job_formset.is_valid():
+            self.object = form.save()
+            job_formset.instance = self.object
+            job_formset.save()
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 class CommissionUpdateView(LoginRequiredMixin, UpdateView):
     model = Commission
-    fields = '__all__'
+    fields = ['title','description','status']
     template_name = "commissions/commission_form.html"
 
+class JobApplicationCreateView(LoginRequiredMixin, CreateView):
+    template_name = "commissions/commission_form.html"
+    form_class = JobApplicationForm
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        form.instance.job = Job.objects.get(self.job.get_pk)
+        form.instance.applicant = self.request.user.profile
+        
+        return super().form_valid(form)
 # Create your views here.
