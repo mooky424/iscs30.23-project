@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from user_management.models import Profile
 from .models import Article, ArticleCategory, Comment
 from .forms import ArticleForm, CommentForm
@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 
 class ArticleListView(ListView):
     model = Article
-    context_object_name = 'article'
+    context_object_name = 'articles'
     template_name = "blog/article_list.html"
     
     def get_context_data(self, **kwargs):
@@ -81,7 +81,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         return ctx
     
     def get_success_url(self):
-        return reverse_lazy('blog:article_detail')
+        return reverse('blog:article_detail', kwargs = {'pk':self.object.pk})
     
     def form_valid(self, form):
         form.instance.author = self.request.user.profile
