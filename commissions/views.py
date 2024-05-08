@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -20,6 +20,7 @@ class CommissionDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         commission_instance = self.get_object()
+        application_form = JobApplicationForm
         manpower_required = 0
         accepted = 0
 
@@ -32,8 +33,20 @@ class CommissionDetailView(DetailView):
         context["total_manpower_required"] = manpower_required
         context["manpower_available"] = manpower_available
         context["accepted"] = accepted
+        context["application_form"] = application_form
         
         return context
+    
+    def post(self, request, *args, **kwargs):
+        job_pk = int(request.POST.get("job_pk"))
+        job_application_instance = JobApplication()
+        job_application_instance.job = Job.objects.get(pk=job_pk)
+        job_application_instance.applicant = self.request.user.profile
+        job_application_instance.status = "Pending"
+        job_application_instance.save()
+
+        return self.get(request, *args, **kwargs)
+    
 
 class CommissionCreateView(LoginRequiredMixin, CreateView):
     template_name = 'commissions/commission_form.html'
@@ -63,15 +76,5 @@ class CommissionUpdateView(LoginRequiredMixin, UpdateView):
     model = Commission
     fields = ['title','description','status']
     template_name = "commissions/commission_updateform.html"
-
-class JobApplicationCreateView(LoginRequiredMixin, CreateView):
-    template_name = "commissions/commission_form.html"
-    form_class = JobApplicationForm
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        form.instance.job = Job.objects.get(self.job.get_pk)
-        form.instance.applicant = self.request.user.profile
-        
-        return super().form_valid(form)
+    
 # Create your views here.

@@ -22,15 +22,23 @@
                 <li>status: {{ job.status }}</li>
                 <li>created on: {{ job.created_on }}</li>
                 <li>last updated: {{ job.updated_on }}</li>
-                <li>primary key: {{ job.get_pk }}</li>
                 {% if request.user.is_authenticated %}
-                    <li><a href ="../{{job.get_pk}}/signup">Apply for job</a></li>
+                    <form method = "post">
+                        {% csrf_token %}
+                        {{ application_form }}
+                            <input type="hidden" name="job_pk" value="{{job.pk}}">
+                        {% if job.manpower_required == job.applicants_accepted%}
+                            <button disabled>Apply for job</button>
+                        {% else %}
+                            <button type="submit">Apply for job</button>
+                        {% endif %}    
+                    </form>
                 {% endif %}
             </ul>
         {% endfor %}
 
     {% if commission.author.user == user %}
         <a href = "../{{commission.get_pk}}/edit">Update Commission</a>
-    {% endif%}
+    {% endif %}
     <a href = "../list">Back to list view</a>
 {% endblock content %}

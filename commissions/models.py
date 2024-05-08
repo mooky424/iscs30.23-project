@@ -15,7 +15,7 @@ class Commission(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-status","created_on"]
+        ordering = ["-status","-created_on"]
 
     def __str__(self):
         return "{}".format(self.title)
@@ -65,4 +65,7 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return'{}'.format(self.applicant)
+
+    def get_absolute_url(self):
+        return reverse("commissions:comList")
 # Create your models here.

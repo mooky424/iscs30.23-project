@@ -2,17 +2,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for form in formset %}
-        <form method="post">
-            {% csrf_token %}
-            {{  form.as_p  }}
-            <button type="submit">save</button>
-        </form>
-    {% endfor %}
     <form method="post">
         {% csrf_token %}
         {{  form.as_p  }}
-        <p>Author: {{user}} </p>
+        <p>Author: {{ user }} </p>
 
         {{ job_formset.management_form }}
         {% for form in job_formset %}
