@@ -9,16 +9,16 @@ class ArticleCategory(models.Model):
     description = models.TextField(null=True, blank=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
-    ordering = ["name"]
+    
+    class Meta:
+        ordering = ['name']
+
 
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ["name"]
-
     def get_absolute_url(self):
-        return reverse("wiki/articles", args=str(self.pk))
+        return reverse('wiki/articles', args=str(self.pk))
 
 
 class Article(models.Model):
