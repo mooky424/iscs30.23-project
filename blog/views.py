@@ -1,88 +1,91 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse_lazy, reverse
-from user_management.models import Profile
-from .models import Article, ArticleCategory, Comment
-from .forms import ArticleForm, CommentForm
-from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, View
+
+from .forms import CommentForm
+from .models import Article, ArticleCategory
+
+
+# Create your views here.
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = "blog/article_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comment_form"] = CommentForm()
+        context["comments"] = self.object.comment_set.all()
+
+        author_articles = Article.objects.filter(author=self.object.author).exclude(
+            pk=self.object.pk
+        )[:2]
+        context["author_articles"] = author_articles
+
+        return context
+
 
 class ArticleListView(ListView):
     model = Article
-    context_object_name = 'articles'
     template_name = "blog/article_list.html"
-    
+    context_object_name = "articles"
+
+    def get_queryset(self):
+        user_articles = Article.objects.filter(author=self.request.user)
+        other_articles = Article.objects.exclude(author=self.request.user)
+        categories = ArticleCategory.objects.all()
+
+        articles_by_category = {}
+        for category in categories:
+            articles = other_articles.filter(category=category)
+            articles_by_category[category] = articles
+
+        queryset = list(user_articles) + list(other_articles)
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["article_category"] = ArticleCategory.objects.all()
-        return context
-    
+        user_articles = Article.objects.filter(author=self.request.user)
+        other_articles = Article.objects.exclude(author=self.request.user)
+        categories = ArticleCategory.objects.all()
 
-class ArticleDetailView(DetailView):
-    model = Article
-    context_object_name = "article"
-    template_name = "blog/article_detail.html"
-    
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["article_category"] = ArticleCategory.objects.all()
-        ctx["comments"] = Comment.objects.all()
-        ctx["form"] = CommentForm()
-        return ctx
-    
-    def post(self, request, *args, **kwargs):
+        articles_by_category = {}
+        for category in categories:
+            articles = other_articles.filter(category=category)
+            articles_by_category[category] = articles
+
+        context["user_articles"] = user_articles
+        context["articles_by_category"] = articles_by_category
+        return context
+
+
+class CommentCreateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        article = get_object_or_404(Article, pk=pk)
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = Comment()
-            comment.author = Profile.objects.get(user = self.request.user)
-            comment.article = self.get_object()
-            comment.entry = form.cleaned_data.get('entry')
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.author = request.user
             comment.save()
-            return HttpResponseRedirect(request.path)
-        else: 
-            self.object_list = self.get_queryset(**kwargs)
-            context = self.get_context_data(**kwargs)
-            context["form"] = form 
-            return self.render_to_response(context)
+        return redirect("blog:article_detail", pk=pk)
+
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
-    form_class = ArticleForm
-    template_name = 'blog/article_form.html'
-   
+    template_name = "article_form.html"
+    fields = ["title", "category", "entry", "header_image"]
+    success_url = reverse_lazy("blog:article_list")
+
     def form_valid(self, form):
-        form.instance.author = self.request.user.profile
+        form.instance.author = self.request.user
         return super().form_valid(form)
-    
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["categories"] = ArticleCategory.objects.all()
-        return ctx
-    
-    def get_initial(self):
-        author = Profile.objects.get(user=self.request.user)
-        return {'author': author}
-    
-    def get_success_url(self) -> str:
-        return reverse_lazy("blog:articles")
+
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    form_class = ArticleForm
-    template_name = ""
-    template_name = 'blog/article_form.html'
+    template_name = "article_form.html"
+    fields = ["title", "category", "entry", "header_image"]
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["categories"] = ArticleCategory.objects.all()
-        ctx["form"] = ArticleForm()
-        return ctx
-    
     def get_success_url(self):
-        return reverse('blog:article_detail', kwargs = {'pk':self.object.pk})
-    
-    def form_valid(self, form):
-        form.instance.author = self.request.user.profile
-        return super().form_valid(form)
+        return reverse_lazy("blog:article_detail", kwargs={"pk": self.object.pk})
