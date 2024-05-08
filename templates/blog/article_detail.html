@@ -4,53 +4,52 @@
     Article List
 {% endblock title %}
 {% block content %}
-<a href = "/blog/articles">Back to Article List</a>
-    <div><img src = "{{ article.header_image.url }}" alt = "{{ article.title }}"></div>
-    <h2>{{article.title}}</h2>
-    <h3>by {{article.author}}</h3>
-    <p>{{article.entry}}</p>
-    <p>Created on: {{article.created_on}}</p>
-    <p>Last updated on: {{article.updated_on}}</p>
+    <a href = "/blog/articles">Back to Article List</a>
+    <div>
+        <img src = "{{ article.header_image.url }}" alt = "{{ article.title }}">
+    </div>
+    <h2>{{ article.title }}</h2>
+    <h3>by {{ article.author }}</h3>
+    <p>{{ article.entry }}</p>
+    <p>Created on: {{ article.created_on }}</p>
+    <p>Last updated on: {{ article.updated_on }}</p>
     {% if request.user.is_authenticated %}
         {% if article.author == request.user.profile %}
-            <a href = "{% url 'blog:article_edit' article.id %}">
+            <a href = "{% url 'blog:article_update' article.id %}">
                 <button type = "edit_article">Edit this article</button>
             </a>
         {% endif %}
     {% endif %}
-    <p>Check more articles from the {{article.category}} category:</p>
+    <p>Check more articles from the {{ article.category }} category:</p>
     <ul>
         {% for category in article_category %}
             {% if category.name == article.category.name %}
                 {% for articles in category.article_category.all %}
-                    {% if articles.title == article.title  %}
+                    {% if articles.title == article.title %}
                     {% else %}
                         <li>
-                            <a href = "{{ articles.get_absolute_url }}">
-                                {{articles.title}}
-                            </a>
+                            <a href = "{{ articles.get_absolute_url }}">{{ articles.title }}</a>
                         </li>
                     {% endif %}
                 {% endfor %}
             {% endif %}
         {% endfor %}
     </ul>
-
     <h4>Comments:</h4>
     {% if request.user.is_authenticated %}
         <form method = "POST">
             {% csrf_token %}
-            {{ form.as_div }}
+            {{ comment_form.as_div }}
             <button type = "submit">Submit</button>
         </form>
     {% endif %}
     <ul>
-        {% for comment in article.comment_article.all %}
+        {% for comment in article.article_comment.all %}
             <li>
-            <p>{{ comment.author }}</p>
-            <p>{{ comment.entry }}</p>
-            <p>Created On: {{ comment.created_on }}</p>
-            <p>Updated On: {{ comment.updated_on }}</p>
+                <p>{{ comment.author }}</p>
+                <p>{{ comment.entry }}</p>
+                <p>Created On: {{ comment.created_on }}</p>
+                <p>Updated On: {{ comment.updated_on }}</p>
             </li>
         {% empty %}
             <li>No comments yet.</li>
