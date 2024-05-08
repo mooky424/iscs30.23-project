@@ -13,3 +13,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.display_name
+
+    def save(self, *args, **kwargs) -> None:
+        print(self.user.email)
+        self.user.email = self.email_add
+        self.user.save()
+        return super().save(*args, **kwargs)

@@ -3,50 +3,85 @@
 {% block title %}
     Products
 {% endblock title %}
+{% block styles %}
+    <style>
+    div.products {
+        margin-bottom: 1em;
+        margin-top: 1em;
+    }
+    div.product-title {
+        margin-bottom: 1em;
+    }
+    </style>
+{% endblock styles %}
 {% block content %}
-    {% if request.user.is_authenticated %}
-        <h1>Your Products</h1>
-        {% for type in product_types %}
-            <h2>{{ type }}</h2>
-            <ul>
-                {% for product in object_list %}
-                    {% if product.type == type and product.owner == request.user.profile %}
-                        <li>
-                            <a href="{{ product.get_absolute_url }}">{{ product }}</a>
-                        </li>
-                    {% endif %}
-                    <li>
-                        <a href="{% url 'merchstore:product_create' %}">Add Product</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-        <h1>Products</h1>
-        {% for type in product_types %}
-            <h2>{{ type }}</h2>
-            <ul>
-                {% for product in object_list %}
-                    {% if product.type == type and product.owner != request.user.profile %}
-                        <li>
-                            <a href="{{ product.get_absolute_url }}">{{ product }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    {% else %}
-        <h1>Products</h1>
-        {% for type in product_types %}
-            <h2>{{ type }}</h2>
-            <ul>
-                {% for product in object_list %}
-                    {% if product.type == type %}
-                        <li>
-                            <a href="{{ product.get_absolute_url }}">{{ product }}</a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    {% endif %}
+    <div class="container">
+        {% if request.user.is_authenticated %}
+            <div class="container products">
+                <div class="container-fluid d-flex product-title">
+                    <div>
+                        <h1>Your Products</h1>
+                    </div>
+                    <div class="align-self-center ms-auto">
+                        <h3>
+                            <a class="btn btn-primary" href="{% url 'merchstore:product_create' %}">Add Product</a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="container-fluid ms-2">
+                    {% for type in product_types %}
+                        <h2>{{ type }}</h2>
+                        <ul class="list-group">
+                            {% for product in object_list %}
+                                {% if product.type == type and product.owner == request.user.profile %}
+                                    <li class="list-group-item">
+                                        <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="container products">
+                <div class="container-fluid d-flex product-title">
+                    <h1>Products</h1>
+                </div>
+                <div class="container-fluid ms-2">
+                    {% for type in product_types %}
+                        <h2>{{ type }}</h2>
+                        <ul class="list-group">
+                            {% for product in object_list %}
+                                {% if product.type == type and product.owner != request.user.profile %}
+                                    <li class="list-group-item">
+                                        <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="container products">
+                <div class="container-fluid d-flex product-title">
+                    <h1>Products</h1>
+                </div>
+                <div class="container-fluid ms-2">
+                    {% for type in product_types %}
+                        <h2>{{ type }}</h2>
+                        <ul class="list-group">
+                            {% for product in object_list %}
+                                {% if product.type == type %}
+                                    <li class="list-group-item">
+                                        <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock content %}
