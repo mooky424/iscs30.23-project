@@ -22,13 +22,17 @@
                 <li>status: {{ job.status }}</li>
                 <li>created on: {{ job.created_on }}</li>
                 <li>last updated: {{ job.updated_on }}</li>
-                <li>primary key: {{ job.get_pk }}</li>
                 {% if request.user.is_authenticated %}
-                    {% if job.manpower_required == job.applicants_accepted%}
-                        <a href ="../{{job.get_pk}}/signup"><button disabled>Apply for job</button></a>  
-                    {% else %}
-                        <a href ="../{{job.get_pk}}/signup"><button>Apply for job</button></a>
-                    {% endif %}
+                    <form method = "post">
+                        {% csrf_token %}
+                        {{ application_form }}
+                            <input type="hidden" name="job_pk" value="{{job.pk}}">
+                        {% if job.manpower_required == job.applicants_accepted%}
+                            <button disabled>Apply for job</button>
+                        {% else %}
+                            <button type="submit">Apply for job</button>
+                        {% endif %}    
+                    </form>
                 {% endif %}
             </ul>
         {% endfor %}
