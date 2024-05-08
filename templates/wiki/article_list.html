@@ -4,14 +4,46 @@
     Article List
 {% endblock title %}
 {% block content %}
-    <h2>Wiki Pookie</h2>
-    <h3>
-        <ul>
-            {% for article in object_list %}
-                <li>
-                    <a href="{{ article.get_absolute_url }}">{{ article }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </h3>
-{% endblock content %}
+        {% if request.user.is_authenticated %}
+        <h1>Wiki Pookie</h1>
+            <h2>My Articles</h2>
+            <ul>
+                {% for category in article_category %}
+                    {% for article in category.article_category.all %}
+                        {% if article.author == request.user.profile %}
+                            <li>
+                                <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            <a href = "{% url 'wiki:create_article'%}">
+                <button type = "create_new_article">Create New Article</button>
+            </a>
+        {% endif %}
+
+    <h2>All Articles</h2>
+    <ul>
+        {% for category in article_category %}
+            <li>
+                <h4>{{category.name}}</h4>
+                <ul>
+                    {% for article in category.article_category.all %}
+                        {% if request.user.is_authenticated %}
+                            {% if not article.author == request.user.profile %}
+                                <li>
+                                    <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li>
+                                <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>   
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -3,32 +3,7 @@
     Commissions List
 {% endblock title %}
 {% block content %}
-
-    {% if request.user.is_authenticated %}
-        <h1>Hello {{ user }}</h1>
-        <h3>Commissions created:</h3>
-        <ul>
-        {% for commission in object_list%}
-            {% if commission.author.user == user %}
-                <li>{{ commission.title }}</li>
-            {% endif%}
-        {% endfor %}
-        </ul>
-        <h3>Commissions applied to:</h3>
-        <ul>
-            {% for commission in object_list %}
-                {% for job in commission.job.all %}
-                    {% for jobapplication in job.jobapplication.all %}
-                        {% if jobapplication.applicant.user == user %}
-                        <li>{{ commission.title }}</li>
-                        {% endif%}
-                    {% endfor %}
-                {% endfor %}
-            {% endfor %}
-            </ul>
-    {% endif %}
-        
-    <h3>Commissions List:</h3>  
+    <h3>Commissions List</h3>
     <ul>
         {% for commission in object_list %}
             <li>
@@ -36,10 +11,7 @@
             </li>
             <p>Created on: {{ commission.created_on }}, Updated on: {{ commission.updated_on }}</p>
             <p>{{ commission.description }}</p>
-            <p>Status: {{ commission.status }}</p>
-            <p>Listed by: {{ commission.author }}</p>
+            <p>People required: {{ commission.people_required }}</p>
         {% endfor %}
     </ul>
-
-    <a href = "../commissions/add">Create Commission</a>
 {% endblock content %}

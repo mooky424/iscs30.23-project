@@ -5,32 +5,10 @@
 {% block content %}
     <h3>{{ commission.title }}</h3>
     <ul>
-        <li>Created on: {{ commission.created_on }}, Updated on: {{ commission.updated_on }}</li>
-        <li>{{ commission.description }}</li>
-        <li>Status: {{ commission.status }}</li>
-        <li>Listed by: {{ commission.author }}</li>
-        <li>Total manpower required: {{ total_manpower_required }}</li>
-        <li>Applicants accepted: {{ accepted }}</li>
-        <li>Total manpower available: {{ manpower_available }}</li>
-    </ul>
-    <h3>Jobs available:</h3>
-        {% for job in commission.job.all %}
-            <h4>role: {{ job.role }}</h4>
-            <ul>
-                <li>manpower required: {{ job.manpower_required }}</li>
-                <li>accepted applicants: {{ job.applicants_accepted }} </li>
-                <li>status: {{ job.status }}</li>
-                <li>created on: {{ job.created_on }}</li>
-                <li>last updated: {{ job.updated_on }}</li>
-                <li>primary key: {{ job.get_pk }}</li>
-                {% if request.user.is_authenticated %}
-                    <li><a href ="../{{job.get_pk}}/signup">Apply for job</a></li>
-                {% endif %}
-            </ul>
+        {% for comment in commission.comments.all %}
+            <li>{{ comment.entry }}</li>
+            <li>{{ comment.created_on }}</li>
+            <li>{{ comment.updated_on }}</li>
         {% endfor %}
-
-    {% if commission.author.user == user %}
-        <a href = "../{{commission.get_pk}}/edit">Update Commission</a>
-    {% endif%}
-    <a href = "../list">Back to list view</a>
+    </ul>
 {% endblock content %}
