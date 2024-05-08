@@ -10,7 +10,6 @@ class Commission(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name = 'author')
     description = models.TextField()
-    people_required = models.IntegerField()
     status = models.CharField(max_length = 12, choices=Status_Choices_Commission, default='Open')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

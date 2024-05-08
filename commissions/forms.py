@@ -3,10 +3,25 @@ from django.forms import formset_factory
 from django.forms import ModelForm, TextInput
 from .models import Commission, Job, JobApplication
 
+
+Status_Choices_Commission = (
+    ('Open','Open'), ('Full','Full'), ('Completed','Completed'), ('Discontinued','Discounted')
+)
+
 class CommissionForm(forms.ModelForm):
-    model = Commission
-    fields = '__all__'
+    title = forms.CharField(max_length=255)
+    description = forms.CharField(max_length=255)
+    status = forms.ChoiceField(choices = Status_Choices_Commission)
+    class Meta:
+        model = Commission
+        fields = ['title','description','status']
+
+    role = forms.CharField(max_length=255)
+    manpower_required = forms.IntegerField()
 
 class JobForm(forms.ModelForm):
-    model = Job
-    fields = '__all__'
+    class Meta:
+        model = Job
+        fields = '__all__'
+
+CommissionFormSet = formset_factory(CommissionForm, JobForm)
