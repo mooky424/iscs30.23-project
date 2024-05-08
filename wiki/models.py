@@ -1,47 +1,32 @@
 from django.db import models
 from django.urls import reverse
-from user_management.models import Profile
 
 
 class ArticleCategory(models.Model):
-    name = models.CharField(max_length = 255)
-    description = models.TextField(null = True, blank = True)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    ordering = ['name']
+
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        ordering = ["name"]
+   
+    def get_absolute_url(self):
+        return reverse('wiki/articles', args=str(self.pk))
 
 
 class Article(models.Model):
-    title = models.CharField(max_length = 255)
-    author = models.ForeignKey(Profile, on_delete = models.SET_NULL, null = True)
-    category = models.ForeignKey(ArticleCategory, on_delete = models.SET_NULL, null = True, related_name = "article_category")
-    entry = models.TextField(null = True, blank = True)
-    header_image = models.ImageField(upload_to = "images/wiki", null = True)
-    created_on = models.DateTimeField(null = False, editable = False, auto_now_add = True)
-    updated_on = models.DateTimeField(null = True, editable = False, auto_now = True)
-    
-    def __str__(self):
-        return self.title
-    
-    def get_absolute_url(self):
-        return reverse('wiki:article', args = [self.pk])
-    
-    class Meta:
-        ordering = ["-updated_on"]
-
-
-class Comment(models.Model):
-    author = models.ForeignKey(Profile, on_delete = models.SET_NULL, null = True, blank = True, related_name = 'comment_author')
-    article = models.ForeignKey(Article, on_delete = models.CASCADE, null = True, blank = True, related_name = 'comment_article')
-    entry = models.TextField(null=True)
-    created_on = models.DateTimeField(null = False, auto_now_add = True)
-    updated_on = models.DateTimeField(null = True, auto_now = True)
-
-    def __str__(self):
-        return f"Comment by {self.author} on {self.article.title}"
+    title = models.CharField(max_length=255)
+    category = models.ForeignKey(ArticleCategory, on_delete=models.SET_NULL, null=True)
+    entry = models.TextField()
+    created_on = models.DateTimeField(auto_now_add="True")
+    updated_on = models.DateTimeField(auto_now="True")
     
     class Meta:
         ordering = ["-created_on"]
+   
+    def __str__(self):
+        return self.title
+   
+    def get_absolute_url(self):
+        return reverse('wiki:article_detail', args=str(self.pk))
