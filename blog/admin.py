@@ -27,7 +27,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "updated_on",
     ]
 
-    fields = ["title", "author", "category", "entry","header-image"]
+    fields = ["title", "author", "category", "entry","header_image"]
 
 
 admin.site.register(ArticleCategory, ArticleCategoryAdmin)

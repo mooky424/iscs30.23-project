@@ -1,11 +1,47 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 {% block title %}
-{%endblock title%}
+    Article List
+{% endblock title %}
 {% block content %}
-<h1> Article List </h1>
+        {% if request.user.is_authenticated %}
+        <h1>Rafa's Blog!</h1>
+            <h2>My Articles</h2>
+            <ul>
+                {% for category in article_category %}
+                    {% for article in category.article_category.all %}
+                        {% if article.author == request.user.profile %}
+                            <li>
+                                <a href = "{{ article.get_absolute_url }}"> {{article.title}} </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+            <a href = "{% url 'blog:create_article'%}">Create New Article</a>
+        {% endif %}
+
+    <h2>All Articles</h2>
     <ul>
-    {% for article in object_list %}
-        <li> <a href="{% url 'blog:article_detail' article.pk %}"> {{ article.title }} </a></li>
-    {% endfor %}
+        {% for category in article_category %}
+            <li>
+                <h4>{{category.name}}</h4>
+                <ul>
+                    {% for article in category.article_category.all %}
+                        {% if request.user.is_authenticated %}
+                            {% if not article.author == request.user.profile %}
+                                <li>
+                                    <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li>
+                                <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>   
+            </li>
+        {% endfor %}
     </ul>
 {% endblock %}
