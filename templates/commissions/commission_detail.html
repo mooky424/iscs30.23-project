@@ -30,7 +30,7 @@
         {% endfor %}
 
     {% if commission.author.user == user %}
-        <a href = "../{{commission.get_pk}}/update">Update Commission</a>
+        <a href = "../{{commission.get_pk}}/edit">Update Commission</a>
     {% endif%}
     <a href = "../list">Back to list view</a>
 {% endblock content %}

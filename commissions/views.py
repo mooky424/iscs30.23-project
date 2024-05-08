@@ -62,7 +62,7 @@ class CommissionCreateView(LoginRequiredMixin, CreateView):
 class CommissionUpdateView(LoginRequiredMixin, UpdateView):
     model = Commission
     fields = ['title','description','status']
-    template_name = "commissions/commission_form.html"
+    template_name = "commissions/commission_updateform.html"
 
 class JobApplicationCreateView(LoginRequiredMixin, CreateView):
     template_name = "commissions/commission_form.html"
