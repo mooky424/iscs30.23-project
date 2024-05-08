@@ -16,9 +16,9 @@ class ArticleCategory(models.Model):
 
     class Meta:
         ordering = ["name"]
-   
+
     def get_absolute_url(self):
-        return reverse('wiki/articles', args=str(self.pk))
+        return reverse("wiki/articles", args=str(self.pk))
 
 
 class Article(models.Model):
