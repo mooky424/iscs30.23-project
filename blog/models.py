@@ -6,10 +6,10 @@ from django.urls import reverse
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255)
-    entry = models.TextField()
+    entry_field = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(
+    categories = models.ForeignKey(
         "ArticleCategory", on_delete=models.SET_NULL, null=True, related_name="articles"
     )
     header_image = models.ImageField(upload_to="article_images", default="default.jpg")
@@ -29,7 +29,7 @@ class ArticleCategory(models.Model):
     description = models.TextField()
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["name"]
         verbose_name_plural = "article categories"
 
     def __str__(self):
@@ -37,11 +37,11 @@ class ArticleCategory(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    entry = models.TextField()
+    entry_field = models.TextField()
 
     class Meta:
         ordering = ["-created_on"]
