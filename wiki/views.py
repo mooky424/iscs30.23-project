@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 
 from user_management.models import Profile
@@ -70,7 +70,7 @@ class ArticleCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("wiki:articles")
+        return reverse("wiki:article", kwargs={'pk':self.object.pk})
 
 
 class ArticleUpdate(LoginRequiredMixin, UpdateView):
@@ -86,20 +86,9 @@ class ArticleUpdate(LoginRequiredMixin, UpdateView):
         ctx["form"] = ArticleForm()
         return ctx
     
-    def post(self, request, *args, **kwargs):
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            article = Article()
-            article.title = form.cleaned_data.get('title')
-            article.author = Profile.objects.get(user_id = self.request.user)
-            article.entry = form.cleaned_data.get('entry')
-            article.header_image = form.cleaned_data.get('header_image')
-            article.save()
-            return self.get(request, *args, **kwargs)
-        else:
-            self.object_list = self.get_queryset(**kwargs)
-            context = self.get_context_data(**kwargs)
-            context["form"] = form 
-            return self.render_to_response(context)
+    def form_valid(self, form):
+        form.instance.author = self.request.user.profile
+        return super().form_valid(form)
+    
     def get_success_url(self):
-        return reverse_lazy("wiki:articles")
+        return reverse("wiki:article", kwargs={'pk':self.object.pk})

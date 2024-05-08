@@ -4,7 +4,7 @@
     Article List
 {% endblock title %}
 {% block content %}
-<a href = "{% url 'wiki:articles'%}">Back to Article List</a>
+    <p><a href = "{% url 'wiki:articles'%}">Back to Article List</a></p>
     <div><img src = "{{ article.header_image.url }}" alt = "{{ article.title }}"></div>
     <h2>{{article.title}}</h2>
     <h3>by {{article.author}}</h3>
@@ -12,9 +12,9 @@
     <p>Created on: {{article.created_on}}</p>
     <p>Last updated on: {{article.updated_on}}</p>
     {% if request.user.is_authenticated %}
-        {% if article.author == request.user.username %}
-            <a href = "{% url 'wiki:article_edit' article.id %}">
-                Edit this article
+        {% if article.author == request.user.profile %}
+            <a href = "{% url 'wiki:edit_article' article.id %}">
+                <button type = "edit_article">Edit this Article</button>
             </a>
         {% endif %}
     {% endif %}

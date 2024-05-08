@@ -10,7 +10,7 @@
             <ul>
                 {% for category in article_category %}
                     {% for article in category.article_category.all %}
-                        {% if article.author == request.user.username %}
+                        {% if article.author == request.user.profile %}
                             <li>
                                 <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
                             </li>
@@ -18,7 +18,9 @@
                     {% endfor %}
                 {% endfor %}
             </ul>
-            <a href = "{% url 'wiki:create_article'%}">Create New Article</a>
+            <a href = "{% url 'wiki:create_article'%}">
+                <button type = "create_new_article">Create New Article</button>
+            </a>
         {% endif %}
 
     <h2>All Articles</h2>
@@ -29,7 +31,7 @@
                 <ul>
                     {% for article in category.article_category.all %}
                         {% if request.user.is_authenticated %}
-                            {% if not article.author == request.user.username %}
+                            {% if not article.author == request.user.profile %}
                                 <li>
                                     <a href = "{{ article.get_absolute_url }}">{{article.title}}</a>
                                 </li>
