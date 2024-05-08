@@ -65,4 +65,7 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return'{}'.format(self.applicant)
+
+    def get_absolute_url(self):
+        return reverse("commissions:comList")
 # Create your models here.

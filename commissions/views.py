@@ -65,20 +65,15 @@ class CommissionUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "commissions/commission_updateform.html"
 
 class JobApplicationCreateView(LoginRequiredMixin, CreateView):
+    model = JobApplication
     template_name = "commissions/commission_form.html"
     form_class = JobApplicationForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        return context
     def form_valid(self, form):
-        job_pk = self.kwargs['job_pk']
-        job = get_object_or_404(Job, pk=job_pk)
-        form.instance.job = job
+        form.instance.job = Job.objects.get(pk=self.kwargs["pk"])
         context = self.get_context_data()
-        form.instance.job = Job.objects.get(self.job.get_pk)
         form.instance.applicant = self.request.user.profile
+        form.instance.status = "Pending"
         
         return super().form_valid(form)
 # Create your views here.
