@@ -5,14 +5,13 @@ from django.urls import reverse
 class ArticleCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    ordering = ['name']
-
+    ordering = ["name"]
 
     def __str__(self):
         return self.name
-   
+
     def get_absolute_url(self):
-        return reverse('wiki/articles', args=str(self.pk))
+        return reverse("wiki/articles", args=str(self.pk))
 
 
 class Article(models.Model):
@@ -21,12 +20,12 @@ class Article(models.Model):
     entry = models.TextField()
     created_on = models.DateTimeField(auto_now_add="True")
     updated_on = models.DateTimeField(auto_now="True")
-    
+
     class Meta:
         ordering = ["-created_on"]
-   
+
     def __str__(self):
         return self.title
-   
+
     def get_absolute_url(self):
-        return reverse('wiki:article_detail', args=str(self.pk))
+        return reverse("wiki:article_detail", args=str(self.pk))
