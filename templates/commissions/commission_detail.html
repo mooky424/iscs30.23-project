@@ -24,13 +24,17 @@
                 <li>last updated: {{ job.updated_on }}</li>
                 <li>primary key: {{ job.get_pk }}</li>
                 {% if request.user.is_authenticated %}
-                    <li><a href ="../{{job.get_pk}}/signup">Apply for job</a></li>
+                    {% if job.manpower_required == job.applicants_accepted%}
+                        <a href ="../{{job.get_pk}}/signup"><button disabled>Apply for job</button></a>  
+                    {% else %}
+                        <a href ="../{{job.get_pk}}/signup"><button>Apply for job</button></a>
+                    {% endif %}
                 {% endif %}
             </ul>
         {% endfor %}
 
     {% if commission.author.user == user %}
         <a href = "../{{commission.get_pk}}/edit">Update Commission</a>
-    {% endif%}
+    {% endif %}
     <a href = "../list">Back to list view</a>
 {% endblock content %}

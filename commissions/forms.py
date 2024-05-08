@@ -31,7 +31,8 @@ class JobApplicationForm(forms.ModelForm):
     status = forms.ChoiceField(choices = Status_Choices_JobApplicant)
     class Meta:
         model = JobApplication
-        fields = ['status']
+        fields = ['status','job']
+        widgets = { 'job': forms.HiddenInput()}
 
 
 JobFormSet = inlineformset_factory(Commission, Job, form=JobForm, extra = 3)
