@@ -1,12 +1,15 @@
 from django.contrib import admin
-from .models import ArticleCategory, Article, Comment
+
+from .models import Article, ArticleCategory, Comment
 
 
 class CommentInLine(admin.TabularInline):
     model = Comment
 
+
 class ArticleInLine(admin.TabularInline):
     model = Article
+
 
 class ArticleCategoryAdmin(admin.ModelAdmin):
     model = ArticleCategory
@@ -28,7 +31,7 @@ class ArticleAdmin(admin.ModelAdmin):
         "updated_on",
     ]
 
-    fields = ["title", "author", "category", "entry","header-image"]
+    fields = ["title", "author", "category", "entry", "header_image"]
 
 
 admin.site.register(ArticleCategory, ArticleCategoryAdmin)

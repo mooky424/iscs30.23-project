@@ -33,7 +33,7 @@ class ArticleCategory(models.Model):
         verbose_name_plural = "article categories"
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 class Comment(models.Model):
@@ -47,4 +47,4 @@ class Comment(models.Model):
         ordering = ["-created_on"]
 
     def __str__(self):
-        return self.title
+        return self.entry
