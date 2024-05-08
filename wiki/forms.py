@@ -4,10 +4,16 @@ from .models import Article, ArticleCategory, Comment
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ('title', 'category', 'entry', 'header_image')
+        fields = '__all__'
         widgets = {
-            "category" : forms.Select()
+            "category": forms.Select()
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['author'].disabled = True
+
+#
 
 class CommentForm(forms.ModelForm):
     class Meta:
