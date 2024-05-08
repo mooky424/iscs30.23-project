@@ -15,7 +15,7 @@ class Commission(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["-status","created_on"]
+        ordering = ["-status","-created_on"]
 
     def __str__(self):
         return "{}".format(self.title)
