@@ -15,6 +15,18 @@ class UserAdmin(BaseUserAdmin):
         ProfileInline,
     ]
 
+    list_display = [
+        "username",
+        "display_name",
+        "email",
+        "first_name",
+        "last_name",
+        "is_staff",
+    ]
+
+    def display_name(self, obj):
+        return obj.profile.display_name
+
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

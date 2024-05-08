@@ -12,6 +12,7 @@ class ArticleCategoryAdmin(admin.ModelAdmin):
     model = ArticleCategory
     inlines = [ArticleInLine]
 
+
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
     inlines = [CommentInLine]

@@ -1,22 +1,19 @@
 from django import forms
-from .models import Article, ArticleCategory, Comment
+
+from .models import Article, Comment
+
 
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields =  '__all__'
-        widgets = {
-            "category" : forms.Select()
-        }
+        fields = ["title", "category", "entry", "header_image"]
 
-    def __init__(self, *args, **kwargs):
-            super().__init__(*args,**kwargs)
-            self.fields['author'].disabled = True
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields.pop("author")
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['entry']
-        widgets = {
-            "entry" : forms.Textarea()
-        }
+        fields = ["entry"]
