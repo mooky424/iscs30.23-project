@@ -34,7 +34,7 @@ class ArticleDetailView(DetailView):
         return self.get(request, *args, **kwargs)
 
 
-class ArticleListView(ListView):
+class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "blog/article_list.html"
     context_object_name = "articles"
