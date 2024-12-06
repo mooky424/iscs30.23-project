@@ -22,7 +22,7 @@ RUN --mount=type=secret,id=env,target=./.env \
     python manage.py createsuperuser --no-input
 
 # Expose port 8000 for the Django application
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "8080"]
