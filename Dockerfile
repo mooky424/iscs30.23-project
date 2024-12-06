@@ -5,7 +5,7 @@ FROM python:3.12
 ENV PYTHONUNBUFFERED=1
 
 # Set working directory to /hobbysite
-WORKDIR /hobbysite
+WORKDIR /app
 
 # Copy all files to working directory
 COPY . .
@@ -16,10 +16,6 @@ RUN pip install -r requirements.txt
 # Initial setup for django app
 RUN python manage.py migrate
 RUN python manage.py collectstatic
-
-# Create initial superuser with .env variables
-RUN --mount=type=secret,id=env,target=./.env \ 
-    python manage.py createsuperuser --no-input
 
 # Expose port 8000 for the Django application
 EXPOSE 8080
