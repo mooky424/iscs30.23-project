@@ -18,7 +18,7 @@ RUN python manage.py migrate
 RUN python manage.py collectstatic
 
 # Create initial superuser with .env variables
-RUN --mount=type=secret,id=env,target=./.env \ 
+RUN --mount=type=secret,id=env,target=.env \ 
     python manage.py createsuperuser --username=admin --email=admin@example.com --no-input
 
 # Expose port 8000 for the Django application
