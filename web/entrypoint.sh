@@ -1,6 +1,7 @@
 #!/bin/bash
 APP_PORT=${PORT:-8000}
 SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL:-"admin@example.com"}
+SUPERUSER_ADMIN=${DJANGO_SUPERUSER_USERNAME:-"admin"}
 cd /hobbysite/
 /opt/venv/bin/python manage.py collectstatic
 /opt/venv/bin/python manage.py migrate --noinput
