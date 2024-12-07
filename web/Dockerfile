@@ -1,5 +1,5 @@
 # Use python 3.12 for base image
-FROM python:3.12
+FROM python:3.12-slim
 
 # For logging to prevent Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED=1
@@ -11,18 +11,11 @@ WORKDIR /hobbysite
 COPY . .
 
 # install requirements for app
-RUN pip install -r requirements.txt
+RUN python -m venv /opt/venv
 
 # Initial setup for django app
-RUN python manage.py migrate
-RUN python manage.py collectstatic
-
-# Create initial superuser with .env variables
-RUN --mount=type=secret,id=env,target=.env \ 
-    python manage.py createsuperuser --username=admin --email=admin@example.com --no-input
-
-# Expose port 8000 for the Django application
-EXPOSE 8080
+RUN /opt/venv/bin/pip install -r requirements.txt
+RUN chmod +x entrypoint.sh
 
 # Run the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+CMD ["/hobbysite/entrypoint.sh"]
