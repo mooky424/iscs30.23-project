@@ -2,6 +2,7 @@
 db.sqlite3
 .env
 .DS_Store
-/media/
-/images/
-/static/
+**/media/
+**/images/
+**/static/
+/venv/
