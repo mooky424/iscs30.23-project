@@ -19,3 +19,6 @@ spec:
         image: mooky0/iscs30.23-project:latest
         ports:
         - containerPort: 8000
+        envFrom:
+          - secretRef:
+              name: hobbysite-secret
