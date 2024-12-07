@@ -19,6 +19,6 @@ spec:
         image: postgres
         envFrom:
           - secretRef:
-            name:hobbysite-secret
+            name: hobbysite-secret
         ports:
         - containerPort: 5432
