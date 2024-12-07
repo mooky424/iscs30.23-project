@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: nginx-cm
 data:
-  default.cong:
+  default.conf:
     server{
     listen 80;
     server_name localhost;
