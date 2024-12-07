@@ -25,10 +25,3 @@ spec:
         image: nginx
         ports:
           - containerPort: 80
-        volumeMounts:
-          - name: nginx
-            mountPath: /etc/nginx/conf.d/default.conf
-            subPath: default.conf          
-            readOnly: true
-          - mountPath: "/static"
-            name: staticfiles
