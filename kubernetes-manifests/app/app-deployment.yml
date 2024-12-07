@@ -25,7 +25,7 @@ spec:
         - containerPort: 8000
         envFrom:
         - configMapRef:
-          name: app-cm
+            name: app-cm
         volumeMounts:
           - mountPath: "/static"
             name: staticfiles
