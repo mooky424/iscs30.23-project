@@ -8,6 +8,6 @@ spec:
   selector:
     name: hobbysite-deployment
   ports:
-    protocol: TCP
+  - protocol: TCP
     port: 80
     targetPort: 8000
