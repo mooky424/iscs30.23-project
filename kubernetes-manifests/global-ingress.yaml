@@ -15,7 +15,7 @@ spec:
           service:
             name: postgres-deployment
             port:
-              number: 80
+              number: 5432
       - path: /
         pathType: ImplementationSpecific
         backend:
