@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-cm
+  namespace: django-app
+  data:
+    DB_HOST: "postgres-service"
+    POSTGRES_USER: "admin"
+    POSTGRES_PASSWORD: "adminpw"
+    DB_NAME: "django_app"
+    DB_PORT: "5432"
+    STATIC_ROOT: "/static"
