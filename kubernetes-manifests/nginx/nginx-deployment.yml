@@ -17,7 +17,7 @@ spec:
       - name: nginx
         configMap:
         name: nginx-cm
-      - name: staticfiles:
+      - name: staticfiles
         persistentVolumeClaim:
           claimName: staticfiles-pvc
       containers:
