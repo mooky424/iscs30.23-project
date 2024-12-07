@@ -20,7 +20,7 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: hello-lb-svc
+            name: hobbysite-loadbalancer
             port:
               number: 80
 
