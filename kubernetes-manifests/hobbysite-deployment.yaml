@@ -17,6 +17,7 @@ spec:
       containers:
       - name: hobbysite
         image: mooky0/iscs30.23-project:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
         envFrom:
