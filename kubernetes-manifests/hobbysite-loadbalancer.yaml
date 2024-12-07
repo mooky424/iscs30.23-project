@@ -7,3 +7,7 @@ spec:
   loadBalancerIP: 34.92.178.3
   selector:
     name: hobbysite-deployment
+  ports:
+    protocol: TCP
+    port: 80
+    targetPort: 8000
