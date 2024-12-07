@@ -26,5 +26,5 @@ spec:
         - configMapRef:
             name: app-cm
         volumeMounts:
-          - mountPath: "/static"
+          - mountPath: "/var/static"
             name: staticfiles

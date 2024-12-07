@@ -8,7 +8,7 @@ data:
     listen 80;
     server_name localhost;
     
-    location /static/ {
+    location /var/static/ {
       alias /static/;
     }
     

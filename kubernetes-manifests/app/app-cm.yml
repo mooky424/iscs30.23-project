@@ -8,4 +8,4 @@ data:
   POSTGRES_PASSWORD: "adminpw"
   DB_NAME: "django_app"
   DB_PORT: "5432"
-  STATIC_ROOT: "/static"
+  STATIC_ROOT: "/var/static"
