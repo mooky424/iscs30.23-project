@@ -7,14 +7,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgtresdb
+      app: postgtresdb-deployment
   template:
     metadata:
       labels:
-        app: postgresdb
+        app: postgresdb-deployment
     spec:
       containers:
-      - name: postgresdb
+      - name: postgresdb-deployment
         image: 'postgres'
         ports:
           - containerPort: 5432
