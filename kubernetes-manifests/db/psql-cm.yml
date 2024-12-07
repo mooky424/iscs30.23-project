@@ -5,7 +5,7 @@ metadata:
   namespace: django-app
   labels:
     app: postgres
-  data:
-    POSTGRES_DB: "django_app"
-    POSTGRES_USER: "admin"
-    POSTGRES_PASSWORD: "adminpw"
+data:
+  POSTGRES_DB: "django_app"
+  POSTGRES_USER: "admin"
+  POSTGRES_PASSWORD: "adminpw"
