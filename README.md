@@ -94,13 +94,13 @@ kubectl apply -f kubernetes-manifests/nginx
 
 ### 4. Reserve External IPs for Load Balancer and Ingress
 
-    1. Navigate to Google Cloud Console > VPC > IP Address > Reserve External IP-Address.
+1. Navigate to Google Cloud Console > VPC > IP Address > Reserve External IP-Address.
 
-    2. Reserve:
-        1st IP: Regional (for load balancer).
-        2nd IP: Global (for ingress).
+2. Reserve:
+    1st IP: Regional (for load balancer).
+    2nd IP: Global (for ingress).
 
-    3. Update loadBalancerIP in your manifests to reflect the reserved IPs:
+3. Update loadBalancerIP in your manifests to reflect the reserved IPs:
 ``` yaml
 apiVersion: v1
 kind: Service
