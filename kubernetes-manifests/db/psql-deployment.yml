@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-deployment
+  name: postgres
   namespace: django-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgtresdb-deployment
+      app: postgres
   template:
     metadata:
       labels:
-        app: postgresdb-deployment
+        app: postgres
     spec:
       containers:
-      - name: postgresdb-deployment
+      - name: postgres
         image: 'postgres'
         ports:
           - containerPort: 5432
