@@ -22,8 +22,8 @@ spec:
         - configMapRef:
           name: db-secret-credentials
         volumeMounts:
-          - mountPath: /var/lib/postgres/data
-            name: db-data
+          - name: db-data
+            mountPath: /var/lib/postgres/data
       volumes:
       - name: db-data
         persistentVolumeClaim:
