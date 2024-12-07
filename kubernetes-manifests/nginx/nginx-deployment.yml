@@ -13,12 +13,12 @@ spec:
         app: nginx
     spec:
       volumes:
-      - name: nginx
-        configMap:
-        name: nginx-cm
-      - name: staticfiles
-        persistentVolumeClaim:
-          claimName: staticfiles-pvc
+        - name: nginx
+          configMap:
+            name: nginx-cm
+        - name: staticfiles
+          persistentVolumeClaim:
+            claimName: staticfiles-pvc
       containers:
       - name: nginx
         image: nginx
