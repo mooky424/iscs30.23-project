@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: network-loadbalancer
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 34.92.178.3
+  selector:
+    name: nginx-deployment
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
