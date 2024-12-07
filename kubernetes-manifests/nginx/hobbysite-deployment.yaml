@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hobbysite-deployment
+  labels:
+    app: hobbysite-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hobbysite-deployment
+  template:
+    metadata:
+      labels:
+        app: hobbysite-deployment
+    spec:
+      containers:
+      - name: hobbysite
+        image: mooky0/iscs30.23-project:latest
+        envFrom:
+          -
+        ports:
+        - containerPort: 8000
